@@ -1,14 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
-// import './index.css'
-
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 
+// Context
+import TodoProvider from './context/todos.context'
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <TodoProvider>
+      <App />
+    </TodoProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

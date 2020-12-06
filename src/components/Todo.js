@@ -1,3 +1,5 @@
+import { useContext, memo } from 'react'
+
 import {
   ListItem,
   ListItemText,
@@ -11,8 +13,9 @@ import useToggle from '../hooks/useToggle'
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
-
 import EditTodoForm from './EditTodoForm'
+
+import { TodoContext } from '../context/todos.context'
 
 const StyledListItemText = styled(ListItemText)`
   ${(p) =>
@@ -22,26 +25,17 @@ const StyledListItemText = styled(ListItemText)`
     `}
 `
 
-export default function Todo({
-  id,
-  task,
-  completed,
-  removeTodo,
-  toggleTodo,
-  updateTodoTask,
-}) {
+function Todo({ id, task, completed }) {
   // Edit state
   const [isEditing, toggle] = useToggle(false)
+
+  // Todo context
+  const { removeTodo, toggleTodo } = useContext(TodoContext)
 
   return (
     <ListItem style={{ height: '64px' }}>
       {isEditing ? (
-        <EditTodoForm
-          id={id}
-          task={task}
-          updateTodoTask={updateTodoTask}
-          toggle={toggle}
-        />
+        <EditTodoForm id={id} task={task} toggle={toggle} />
       ) : (
         <>
           <Checkbox
@@ -65,3 +59,5 @@ export default function Todo({
     </ListItem>
   )
 }
+
+export default memo(Todo)
